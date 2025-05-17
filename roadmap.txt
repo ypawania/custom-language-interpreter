@@ -1,0 +1,16 @@
+- build an interpreter (no repls, only run files)
+- make the kwywords customizable
+- frontend to change kwywords
+- gpt to custom generate keywords for you  
+- button to generate random curses esolang + coding challenge in it: langroulette -> use gpt
+
+
+impact: 
+- most people use programming languages, but this lets people build their own:
+    learn how languages and interpreters work on the lower level
+- customize your own language to suit your coding style
+- non eurocentric programming languages:
+    making programming more accessible by letting people code in their native lang / style:
+    ie. HingiLang, TagalogLang, etc.
+
+
