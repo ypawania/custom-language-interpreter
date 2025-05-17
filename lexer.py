@@ -5,7 +5,15 @@ class Token:
         self.line = line
 
 
-keywords = ["if", "else", "while", "and", "or"]
+custom_keywords = {
+    "chat": "if",
+    "else": "else",
+    "while": "while",
+    "and": "and",
+    "or": "or",
+    "say": "print",
+}
+
 start = 0
 current = 0
 line = 1
@@ -82,8 +90,8 @@ def scan_token(source):
         while current < len(source) and is_letter(source[current]):
             value += source[current]
             current += 1
-        if value in keywords:
-            return Token(value.upper(), value, line)  # e.g., "IF"
+        if value in custom_keywords:
+            return Token(custom_keywords[value].upper(), value, line)  # e.g., "IF"
         return Token("IDENTIFIER", value, line)
 
     elif c in [" ", "\r", "\t"]:
@@ -91,5 +99,5 @@ def scan_token(source):
 
 
 print(
-    [(t.type, t.lexeme) for t in scan('if (x == 10) { x = x + 1; print("hello world"}')]
+    [(t.type, t.lexeme) for t in scan('if (x == 10) { x = x + 1; say("hello world")}')]
 )
