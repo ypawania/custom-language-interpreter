@@ -4,14 +4,19 @@ class Token:
         self.lexeme = lexeme
         self.line = line
 
+    def __repr__(self):
+        return f"Token({self.type}, {self.lexeme!r}, line={self.line})"
+
 
 custom_keywords = {
     "chat": "if",
+    "if": "if",
     "else": "else",
     "while": "while",
     "and": "and",
     "or": "or",
     "say": "print",
+    "print": "print",
 }
 
 start = 0
@@ -96,8 +101,3 @@ def scan_token(source):
 
     elif c in [" ", "\r", "\t"]:
         return None  # skip whitespace
-
-
-print(
-    [(t.type, t.lexeme) for t in scan('if (x == 10) { x = x + 1; say("hello world")}')]
-)
