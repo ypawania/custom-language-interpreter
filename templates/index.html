@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Language Interpreter</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1e1e2f;
+      color: #f1f1f1;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+    textarea, input, button {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+      box-sizing: border-box;
+    }
+    textarea {
+      background-color: #2e2e3e;
+      color: #ffffff;
+      resize: vertical;
+      min-height: 150px;
+    }
+    input {
+      background-color: #2e2e3e;
+      color: #ffffff;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .output {
+      background-color: #12121b;
+      padding: 1rem;
+      border-radius: 5px;
+      margin-top: 2rem;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Custom Language Interpreter</h1>
+    <form id="interpreterForm">
+      <label for="sourceCode">Source Code:</label>
+      <textarea id="sourceCode" name="sourceCode" placeholder="Write your code here..."></textarea>
+
+      <label for="customKeywords">Custom Keywords (JSON):</label>
+      <textarea id="customKeywords" name="customKeywords" placeholder='{"say": "print", "loop": "while"}'></textarea>
+
+      <button type="submit">Run</button>
+    </form>
+    <div class="output" id="output"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("interpreterForm");
+    const output = document.getElementById("output");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const sourceCode = document.getElementById("sourceCode").value;
+      let customKeywords = {};
+      try {
+        customKeywords = JSON.parse(document.getElementById("customKeywords").value);
+      } catch (err) {
+        output.innerText = "Invalid JSON for custom keywords.";
+        return;
+      }
+
+      const response = await fetch("/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ source_code: sourceCode, custom_keywords: customKeywords })
+      });
+
+      const result = await response.json();
+      output.innerText = result.output || result.error || "No output returned.";
+    });
+  </script>
+</body>
+</html>
