@@ -65,6 +65,10 @@ def scan_token(source):
         return Token("STAR", c, line)
     elif c == "/":
         return Token("SLASH", c, line)
+    elif c == "%":
+        return Token("MODULO", c, line)
+    elif c == "<":
+        return Token("LESS", c, line)
     elif c == "=":
         if current < len(source) and source[current] == "=":
             current += 1

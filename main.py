@@ -1,19 +1,19 @@
-import parser
 import lexer
+import parser
+from interpreter import Interpreter
 
 source_code = """
-if (x == 1 or y == 2 and z == 3) {
-    print("in if branch");
-    x = x + 1;
+x = 1;
+if (x == 1 or false) {
+    print("x is 1");
 } else {
-    while (x == 2) {
-        print("in while loop");
-    }
+    print("x is not 1");
 }
 """
 
-tokens = lexer.scan(source_code)  # From your lexer
-# print(tokens)
-parser = parser.Parser(tokens)  # From your parser
-ast = parser.parse()  # Returns a list of statements
-print(ast)  # Just to see if parsing succeeds
+tokens = lexer.scan(source_code)
+p = parser.Parser(tokens)
+ast = p.parse()
+
+interpreter = Interpreter()
+interpreter.interpret(ast)

@@ -164,8 +164,16 @@ class Parser:
         return expr
 
     def equality(self):
-        expr = self.addition()
+        expr = self.comparison()
         while self.match("EQUAL_EQUAL"):
+            operator = self.previous()
+            right = self.primary()
+            expr = Binary(expr, operator, right)
+        return expr
+
+    def comparison(self):
+        expr = self.addition()
+        while self.match("LESS"):
             operator = self.previous()
             right = self.addition()
             expr = Binary(expr, operator, right)
@@ -181,7 +189,9 @@ class Parser:
 
     def multiplication(self):
         expr = self.unary()
-        while self.match("STAR", "SLASH"):
+        print("debugging message")
+        while self.match("STAR", "SLASH", "MODULO"):
+            print("inside of parser multiple while reached")
             operator = self.previous()
             right = self.unary()
             expr = Binary(expr, operator, right)
@@ -233,21 +243,3 @@ class Parser:
 
     def previous(self):
         return self.tokens[self.current - 1]
-
-
-source_code = """
-if (x == 1 or y == 2 and z == 3) {
-    print("in if branch");
-    x = x + 1;
-} else {
-    while (x == 2) {
-        print("in while loop");
-    }
-}
-"""
-
-tokens = lexer.scan(source_code)  # From your lexer
-# print(tokens)
-parser = Parser(tokens)  # From your parser
-ast = parser.parse()  # Returns a list of statements
-print(ast)  # Just to see if parsing succeeds
