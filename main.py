@@ -1,19 +1,28 @@
-import lexer
+import interpreter
 import parser
-from interpreter import Interpreter
+import lexer
 
 source_code = """
-x = 1;
-if (x == 1 or false) {
-    print("x is 1");
-} else {
-    print("x is not 1");
+
+i = 0;
+while (i < 30) {
+    if (i % 15 == 0) { print("FizzBuzz"); }
+    else { 
+        if (i % 3 == 0) { print("Fizz"); }
+        else { 
+            if (i % 5 == 0) { print("Buzz"); }
+                else { print(i); }
+        }
+    }
+  i = i + 1;
 }
 """
 
+
 tokens = lexer.scan(source_code)
+print(tokens)
 p = parser.Parser(tokens)
 ast = p.parse()
 
-interpreter = Interpreter()
+interpreter = interpreter.Interpreter()
 interpreter.interpret(ast)

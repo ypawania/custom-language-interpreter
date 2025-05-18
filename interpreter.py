@@ -40,7 +40,6 @@ class Interpreter:
     def execute_Print(self, stmt):
         value = self.evaluate(stmt.expression)
 
-        print("DEBUG: execute_Print was called")
         print(value)
 
     def execute_Assign(self, stmt):
@@ -131,9 +130,7 @@ class Interpreter:
 source_code = """
 
 i = 0;
-print("source code running");
 while (i < 30) {
-    print("while loop entered");
     if (i % 15 == 0) { print("FizzBuzz"); }
     else { 
         if (i % 3 == 0) { print("Fizz"); }
