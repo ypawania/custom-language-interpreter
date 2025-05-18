@@ -17,9 +17,19 @@ while (i < 30) {
   i = i + 1;
 }
 """
+custom_keywords = {
+    "chat": "if",
+    "if": "if",
+    "else": "else",
+    "while": "while",
+    "and": "and",
+    "or": "or",
+    "say": "print",
+    "print": "print",
+}
 
 
-tokens = lexer.scan(source_code)
+tokens = lexer.scan(source_code, custom_keywords)
 print(tokens)
 p = parser.Parser(tokens)
 ast = p.parse()

@@ -8,17 +8,6 @@ class Token:
         return f"Token({self.type}, {self.lexeme!r}, line={self.line})"
 
 
-custom_keywords = {
-    "chat": "if",
-    "if": "if",
-    "else": "else",
-    "while": "while",
-    "and": "and",
-    "or": "or",
-    "say": "print",
-    "print": "print",
-}
-
 start = 0
 current = 0
 line = 1
@@ -28,12 +17,12 @@ def is_letter(c):
     return c.isalpha() or c == "_"
 
 
-def scan(source: str) -> list:
+def scan(source: str, custom_keywords) -> list:
     tokens = []
 
     while current < len(source):
         start = current
-        token = scan_token(source)
+        token = scan_token(source, custom_keywords)
         if token is not None:
             tokens.append(token)
 
@@ -41,7 +30,7 @@ def scan(source: str) -> list:
     return tokens
 
 
-def scan_token(source):
+def scan_token(source, custom_keywords):
     global current, line
 
     c = source[current]
